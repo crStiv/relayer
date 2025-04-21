@@ -130,7 +130,10 @@ func (a *appState) addPathFromUserInput(
 	stderr io.Writer,
 	src, dst, name string,
 ) error {
-	// TODO: confirm name is available before going through input.
+	// Check if the path name is already taken
+	if _, exists := a.config.Paths[name]; exists {
+		return fmt.Errorf("path with name '%s' already exists", name)
+	}
 
 	var (
 		value string
